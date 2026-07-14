@@ -94,10 +94,10 @@ python run_mers.py --bench benchmarks/s38417.bench --name s38417_AB \
     --use-regions --region-top-k 2
 ```
 
-MERS now excites only the rare nodes in the top-2 densest regions. On s15850
-(461 rare nodes) top-2 regions = 79 nodes, an **83% reduction** in the set
-MERS must satisfy -- proportionally faster, and focused on the densest pockets.
-The selection is saved to `mers_progress/<name>/region_selection.pkl`.
+MERS now excites only the rare nodes in the top-K densest regions. Selecting
+a small number of regions typically reduces the targeted rare-node set by a
+large fraction -- proportionally faster generation, focused on the densest
+pockets. The selection is saved to `mers_progress/<name>/region_selection.pkl`.
 
 ## Step 2: Dataset A aligned to the same regions
 

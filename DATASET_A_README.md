@@ -154,22 +154,16 @@ python analyze_ab_trigger_switching.py \
     --vectors-b mers_testvectors/s38417_AB/s38417_AB_Dataset-B_vectors.txt
 ```
 
-Example output (real s38417, 281 pairs):
+Example output shows, per trigger node, the probability of reaching its
+activating value and the toggle rate, together with the aggregate
+trigger-cone switching for Dataset A relative to Dataset B. Dataset A's
+trigger switching should be a small fraction of Dataset B's, while the
+background and input/output profiles stay matched.
 
-```
-Per-trigger P(at activating value):
-  Q_i_2__292_n_0:  A 0.000%   B 1.418%
-  Q_i_2__363_n_0:  A 0.000%   B 1.773%
-  Q_i_4__103_n_0:  A 0.000%   B 13.475%
-  Q_i_6__5_n_0:    A 2.482%   B 3.191%
-Trigger-cone switching/pair:  A=0.036  B=0.214  (A is 17% of B)
-=> Dataset A reduces trigger-cone switching by 83% relative to B.
-```
-
-That 83% gap -- not the payload PARTIAL-activation number -- is the
-A-vs-B contrast that matters for differential Trojan SCA. The
-`--payload-net` figure stays equal on purpose; the trigger figure is what
-your control dataset moves.
+The trigger-switching contrast -- not the payload PARTIAL-activation number
+-- is the A-vs-B signal that matters for differential Trojan SCA. The
+payload figure stays equal on purpose; the trigger figure is what your
+control dataset moves.
 
 ### Do NOT pass --paired for the exported A/B files
 
@@ -183,29 +177,6 @@ ordered sequence whose consecutive lines ARE the intended transitions
 the analyzer WITHOUT `--paired` (the default). `paired=False` in the output
 is correct for these files; it counts each consecutive-line transition once,
 which is exactly the per-pair switching the generator optimised.
-
-### Confirmed reference run (real s38417, B = MERS-s, mutation-rounds 12, 990 pairs)
-
-```
-Per-trigger P(at activating value)      A          B
-  Q_i_2__292_n_0 (==1)               0.000%     4.339%
-  Q_i_2__363_n_0 (==1)               0.000%    10.192%
-  Q_i_4__103_n_0 (==1)               0.000%    10.595%
-  Q_i_6__5_n_0   (==0)               2.220%    12.109%
-Trigger-cone switching / pair        0.035      0.506   (A is 7% of B)
-'Any trigger switches' rate          3.54%     41.92%
-  => Dataset A reduces trigger-cone switching by 93% relative to B.
-
-Matched parameters (within <0.5%):    A          B
-  BackgroundSwitch                   3607.5     3592.5
-  Input  HD                           756.08     756.08   (exact)
-  Output HD                           572.25     572.26   (exact)
-  Output HW                           617.59     616.81
-  Input  HW                           779.75     781.20
-```
-
-This is the intended outcome: trigger-cone switching cut 93% while
-background and input/output Hamming profiles stay matched pair-by-pair.
 
 ## Targeting the ACTUAL Trojan trigger (important)
 

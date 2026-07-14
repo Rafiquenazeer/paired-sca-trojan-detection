@@ -311,21 +311,23 @@ relative_switch = delta_current / total_current
 
 ---
 
-## Part 10 — Expected Results (matching Table 4 & 5 of paper)
+## Part 10 — Expected Results (trend)
 
-For c2670 with N=1000 (8-trigger Trojans):
+The expected outcome, consistent with the MERS paper, is that the two
+reordered variants outperform both the random baseline and MERO on
+side-channel sensitivity (SCS / MaxRelSw):
 
-| Method   | Avg MaxRelSw (SCS) | vs Random | vs MERO  |
-|----------|--------------------|-----------|----------|
-| Random   | 0.02469            | —         | —        |
-| MERO     | 0.03204            | +29.8%    | —        |
-| MERS     | 0.03108            | +25.9%    | -3.0%    |
-| **MERS-h**| **0.03729**       | **+51.1%**| **+16.4%**|
-| **MERS-s**| **0.03984**       | **+61.4%**| **+24.4%**|
+```
+MERS-s  >  MERS-h  >  MERS  >  Random
+```
 
-*Your Python results will be directionally correct but may differ slightly from 
-the paper (which used C simulation and different Trojan sampling).  
-The key trend — MERS-h and MERS-s outperform both Random and MERO — should hold.*
+with MERS-h and MERS-s giving the largest sensitivity gain over the random
+baseline. Absolute SCS values depend on the circuit, the number of rare
+nodes, the Trojan sampling, and the number of vectors, so they will vary run
+to run; the ordering above is the property to check. Exact figures reported
+in the MERS paper (Tables 4-5) used a C-based simulator and a different
+Trojan sampling, so this Python implementation reproduces the trend rather
+than identical numbers.
 
 ---
 
@@ -333,7 +335,7 @@ The key trend — MERS-h and MERS-s outperform both Random and MERO — should h
 
 ## Test vector exports
 
-This version automatically exports all generated testsets in both text and Excel form. After a run, check:
+The pipeline automatically exports all generated testsets in both text and Excel form. After a run, check:
 
 ```text
 mers_testvectors/<run_name>/
@@ -345,9 +347,9 @@ Use `--no-export-vectors` only when you want to skip these files.
 
 ---
 
-## V7 note for Vivado/Xilinx LUT-expanded BENCH files
+## Note for Vivado/Xilinx LUT-expanded BENCH files
 
-For BENCH files generated from Vivado/Xilinx LUT/FDRE netlists, the project now excludes synthetic converter helper nodes from rare-node selection by default. These helper nodes normally start with `__`, for example `__LUTTERM_*`, `__NOT_*`, and `__CONST*`.
+For BENCH files generated from Vivado/Xilinx LUT/FDRE netlists, the project excludes synthetic converter helper nodes from rare-node selection by default. These helper nodes normally start with `__`, for example `__LUTTERM_*`, `__NOT_*`, and `__CONST*`.
 
 They are still simulated internally, but they are not used as MERS/MERO rare-node targets. This prevents inflated rare-node counts and very slow runs on FPGA LUT netlists such as `s38417_T1.bench`.
 
