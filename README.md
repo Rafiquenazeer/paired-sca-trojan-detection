@@ -108,6 +108,22 @@ benchmarks/                  sample .bench circuits (c17, s15850, ...)
 docs (*.md)                  DATASET_A_README, REGIONS_README, GUIDE, ...
 ```
 
+## Results
+
+Experimental results on the **s38417** benchmark are summarised in
+[`results/RESULTS.md`](results/RESULTS.md), covering:
+
+- **Side-channel sensitivity (SCS)** of each MERS variant vs a random
+  baseline (MERS-s reaches ~3.3x random on 4-trigger and ~4.1x on 8-trigger
+  Trojans);
+- **Physical FPGA region formation** at radius 6 (18 regions; top-5 = 186 of
+  302 rare nodes, a 38% reduction) with the radius-selection sweep;
+- **Differential A-vs-B** results: the paired control suppresses switching on
+  the actual trigger nodes by ~96% while background and input/output Hamming
+  profiles stay matched.
+
+Full PDF reports are in [`results/`](results/).
+
 ## Documentation
 
 - `GUIDE.md` — end-to-end usage guide

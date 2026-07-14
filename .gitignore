@@ -13,7 +13,6 @@ mers_run.log
 *.pkl
 
 # Large user benchmarks not shipped in the repo
-benchmarks/s38417.bench
 placement*.csv
 
 # OS / editor
